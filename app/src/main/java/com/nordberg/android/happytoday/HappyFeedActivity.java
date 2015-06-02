@@ -1,7 +1,9 @@
 package com.nordberg.android.happytoday;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -68,7 +70,27 @@ public class HappyFeedActivity extends AppCompatActivity {
                 if (resultCode == Activity.RESULT_OK) {
                     String desc = data.getStringExtra(HappyMomentActivity.HAPPY_DESC_TEXT);
                     // Add it at index 0 so that it appears at the top of the list
-                    happyDataset.add(0, new HappyMoment(desc));
+                    HappyMoment hm = new HappyMoment(desc);
+
+                    HappyDatabaseDbHelper mDbHelper = new HappyDatabaseDbHelper(
+                            this.getApplicationContext());
+                    SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+                    ContentValues values = new ContentValues();
+
+                    values.put(HappyDatabaseContract.HappyEntry.COLUMN_NAME_DESCRIPTION,
+                            hm.getDesc());
+                    values.put(HappyDatabaseContract.HappyEntry.COLUMN_NAME_DATE,
+                            hm.getDateString());
+
+                    long newRowId;
+
+                    newRowId = db.insert(
+                            HappyDatabaseContract.HappyEntry.TABLE_NAME,
+                            null,
+                            values);
+
+                    happyDataset.add(0, hm);
                     mAdapter.notifyDataSetChanged();
                 }
                 break;
