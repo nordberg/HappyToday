@@ -2,9 +2,9 @@ package com.nordberg.android.happytoday;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,7 +15,7 @@ import android.view.View;
 import java.util.ArrayList;
 
 
-public class HappyFeedActivity extends ActionBarActivity {
+public class HappyFeedActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = HappyFeedActivity.class.getSimpleName();
     private static final int HAPPY_REQUEST_CODE = 1337;
@@ -39,11 +39,6 @@ public class HappyFeedActivity extends ActionBarActivity {
 
         happyDataset = new ArrayList<HappyMoment>();
 
-        happyDataset.add(0, new HappyMoment("William köpte kanelbullar åt mig"));
-        happyDataset.add(0, new HappyMoment("Jag lämnade in mitt kexjobb"));
-        happyDataset.add(0, new HappyMoment("Jag skrev OS-tenta"));
-        happyDataset.add(0, new HappyMoment("Jag var i Uppsala"));
-
         mAdapter = new MyAdapter(happyDataset);
         mRecyclerView.setAdapter(mAdapter);
     }
@@ -57,6 +52,14 @@ public class HappyFeedActivity extends ActionBarActivity {
         startActivityForResult(intent, HAPPY_REQUEST_CODE);
     }
 
+    /**
+     * If an activity returns with a result this method will check what result was received.
+     * If the request code equals HAPPY_REQUEST_CODE it means that the user wants to add a happy
+     * moment.
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -64,6 +67,7 @@ public class HappyFeedActivity extends ActionBarActivity {
             case (HAPPY_REQUEST_CODE) : {
                 if (resultCode == Activity.RESULT_OK) {
                     String desc = data.getStringExtra(HappyMomentActivity.HAPPY_DESC_TEXT);
+                    // Add it at index 0 so that it appears at the top of the list
                     happyDataset.add(0, new HappyMoment(desc));
                     mAdapter.notifyDataSetChanged();
                 }
