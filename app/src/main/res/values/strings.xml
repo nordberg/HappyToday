@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Happy Today</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_happy_moment">HappyMomentActivity</string>
+    <string name="what_made_you_happy">What made you happy today?</string>
+    <string name="happy_hint">Happy Moment</string>
+    <string name="add_happy_moment_btn">Add Moment!</string>
+</resources>
