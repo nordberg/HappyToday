@@ -14,6 +14,9 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <!-- TODO: Happy Image in the card -->
+        <!-- TODO: Expand from small card to big card when pressed -->
+
         <TextView
             android:id="@+id/date_id"
             android:layout_width="wrap_content"
