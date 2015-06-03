@@ -128,9 +128,7 @@ public class HappyFeedActivity extends AppCompatActivity {
                     values.put(HappyDatabaseContract.HappyEntry.COLUMN_NAME_DATE,
                             hm.getDateString());
 
-                    long newRowId;
-
-                    newRowId = db.insert(
+                    db.insert(
                             HappyDatabaseContract.HappyEntry.TABLE_NAME,
                             null,
                             values);
