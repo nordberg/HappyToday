@@ -25,4 +25,12 @@
         android:layout_margin="@dimen/fab_margin"
         android:clickable="true"
         android:onClick="addHappyMoment"/>
+
+    <!-- TODO: Get yo toolbar shit together, yo -->
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:minHeight="?attr/actionBarSize"
+        android:background="?attr/colorPrimary" />
 </RelativeLayout>

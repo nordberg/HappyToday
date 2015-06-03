@@ -8,4 +8,6 @@
     <string name="happy_hint">Happy Moment</string>
     <string name="add_happy_moment_btn">Add Moment!</string>
     <string name="happy_activity_label">What Made You Happy?</string>
+    <string name="drawer_open">Drawer Open</string>
+    <string name="drawer_close">Drawer Closed</string>
 </resources>
