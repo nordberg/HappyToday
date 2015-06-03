@@ -3,6 +3,7 @@ package com.nordberg.android.happytoday;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ public class HappyFeedActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    HappyDatabaseDbHelper mDbHelper;
 
     private ArrayList<HappyMoment> happyDataset;
 
@@ -39,10 +41,57 @@ public class HappyFeedActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
+        mDbHelper = new HappyDatabaseDbHelper(this.getApplicationContext());
+
         happyDataset = new ArrayList<HappyMoment>();
 
         mAdapter = new MyAdapter(happyDataset);
         mRecyclerView.setAdapter(mAdapter);
+
+        loadMoments();
+    }
+
+    /**
+     * Load happy moment entries from database to the dataset to be displayed.
+     */
+    private void loadMoments() {
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+        String[] proj = {
+                HappyDatabaseContract.HappyEntry.COLUMN_NAME_DESCRIPTION,
+                HappyDatabaseContract.HappyEntry.COLUMN_NAME_DATE
+        };
+
+        String sortOrder =
+                HappyDatabaseContract.HappyEntry.COLUMN_NAME_DATE + " ASC";
+
+        Cursor c = db.query(
+                HappyDatabaseContract.HappyEntry.TABLE_NAME,
+                proj,
+                null,
+                null,
+                null,
+                null,
+                sortOrder
+        );
+
+        if (c.moveToFirst()) {
+            String desc = c.getString(0);
+            String date = c.getString(1);
+
+            happyDataset.add(0, new HappyMoment(desc, date));
+        }
+
+        while (c.moveToNext()) {
+            String desc = c.getString(c.getColumnIndex(HappyDatabaseContract
+                    .HappyEntry.COLUMN_NAME_DESCRIPTION));
+            String date = c.getString(c.getColumnIndex(HappyDatabaseContract
+                    .HappyEntry.COLUMN_NAME_DATE));
+
+            happyDataset.add(0, new HappyMoment(desc, date));
+        }
+
+        mAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -72,12 +121,10 @@ public class HappyFeedActivity extends AppCompatActivity {
                     // Add it at index 0 so that it appears at the top of the list
                     HappyMoment hm = new HappyMoment(desc);
 
-                    HappyDatabaseDbHelper mDbHelper = new HappyDatabaseDbHelper(
-                            this.getApplicationContext());
                     SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
+                    // Insert values into database
                     ContentValues values = new ContentValues();
-
                     values.put(HappyDatabaseContract.HappyEntry.COLUMN_NAME_DESCRIPTION,
                             hm.getDesc());
                     values.put(HappyDatabaseContract.HappyEntry.COLUMN_NAME_DATE,
