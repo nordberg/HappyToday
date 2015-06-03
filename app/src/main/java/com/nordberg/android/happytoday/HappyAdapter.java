@@ -2,28 +2,26 @@ package com.nordberg.android.happytoday;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by Marcus on 2015-05-29.
  */
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
-    private static final String LOG_TAG = MyAdapter.class.getSimpleName();
+public class HappyAdapter extends RecyclerView.Adapter<HappyAdapter.ViewHolder> {
+    private static final String LOG_TAG = HappyAdapter.class.getSimpleName();
     private ArrayList<HappyMoment> mDataset;
 
-    public MyAdapter(ArrayList<HappyMoment> myDataset) {
+    public HappyAdapter(ArrayList<HappyMoment> myDataset) {
         mDataset = myDataset;
     }
 
     @Override
-    public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public HappyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.happy_card, parent, false);
 
