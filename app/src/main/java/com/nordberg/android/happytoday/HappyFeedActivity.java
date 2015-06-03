@@ -24,7 +24,7 @@ public class HappyFeedActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    HappyDatabaseDbHelper mDbHelper;
+    HappyDbHelper mDbHelper;
 
     private ArrayList<HappyMoment> happyDataset;
 
@@ -39,7 +39,7 @@ public class HappyFeedActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mDbHelper = new HappyDatabaseDbHelper(this.getApplicationContext());
+        mDbHelper = new HappyDbHelper(this.getApplicationContext());
 
         happyDataset = new ArrayList<HappyMoment>();
 
